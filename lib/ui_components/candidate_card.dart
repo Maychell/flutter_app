@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../model/candidate.dart';
 import '../views/candidate_details_2.dart';
+import '../ui_components/star_rating.dart';
 
 class CandidateCard extends StatelessWidget {
 
@@ -74,27 +75,7 @@ class CandidateCard extends StatelessWidget {
                               children: <Widget>[
                                 new Row(
                                   children: <Widget>[
-                                    new Icon(
-                                      Icons.star,
-                                      color: Colors.yellow[700],
-
-                                    ),
-                                    new Icon(
-                                      Icons.star,
-                                      color: Colors.yellow[700],
-                                    ),
-                                    new Icon(
-                                      Icons.star,
-                                      color: Colors.yellow[700],
-                                    ),
-                                    new Icon(
-                                      Icons.star,
-                                      color: Colors.yellow[700],
-                                    ),
-                                    new Icon(
-                                      Icons.star,
-                                      color: Colors.yellow[700],
-                                    )
+                                    new StarRating(_candidate.totalRate)
                                   ],
                                 ),
                                 new Row(

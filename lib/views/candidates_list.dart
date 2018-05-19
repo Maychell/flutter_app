@@ -22,7 +22,7 @@ class CandidatesList extends StatelessWidget {
     List<Rate> rates = <Rate> [ new Rate(11, 5.0), new Rate(11, 4.0) ];
     List<Rate> ratesFalse = <Rate> [ new Rate(11, 5.0), new Rate(11, 5.0), new Rate(11, 5.0) ];
     List<Rate> rates_2 = <Rate> [ new Rate(11, 3.0), new Rate(11, 2.0) ];
-    List<Task> tasks = <Task> [ new Task(11, 'English', true, rates), new Task(11, 'Code Review', true, rates_2), new Task(11, 'Curriculum', true, ratesFalse) ];
+    List<Task> tasks = <Task> [ new Task(11, 'English', true, rates), new Task(11, 'Code Review', true, rates_2), new Task(11, 'Curriculum', true, ratesFalse), new Task(11, 'Interview', true, ratesFalse) ];
     List<Task> tasksList = <Task> [ new Task(11, 'English', false, <Rate> []), new Task(11, 'Code Review', false, <Rate> []) ];
 
     _candidates = <Candidate> [

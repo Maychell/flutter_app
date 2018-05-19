@@ -16,13 +16,13 @@ class CommentCard extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget userAvatar = new Image.network(
       _gravatarUrl,
-      width: 60.0,
-      height: 60.0,
+      width: 50.0,
+      height: 50.0,
       fit: BoxFit.cover,
     );
 
     return new Container(
-      padding: const EdgeInsets.all(3.0),
+      padding: const EdgeInsets.all(8.0),
       child: new Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -36,7 +36,7 @@ class CommentCard extends StatelessWidget {
                   children: <Widget>[
                     new Text(_comment.user.name, style: new TextStyle(fontWeight: FontWeight.bold)),
                     new Padding(padding: const EdgeInsets.only(left: 3.0)),
-                    new Text('said:')
+                    new Text(' - 10/11/2018'),
                   ],
                 ),
                 new Text(_comment.message+_comment.message+_comment.message+_comment.message+_comment.message, softWrap: true,)
