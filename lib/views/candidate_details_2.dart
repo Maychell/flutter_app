@@ -89,11 +89,19 @@ class CandidateDetails2State extends State<CandidateDetails2> {
                               new Expanded(
                                 child: new Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: <Widget>[new Text('TOTAL RATING')],
+                                  children: <Widget>[
+                                    new Text(
+                                      'TOTAL RATING',
+                                      style: new TextStyle(fontWeight: FontWeight.bold),
+                                    )
+                                  ],
                                 ),
                               ),
                               new Padding(padding: const EdgeInsets.all(3.0)),
-                              new Text(widget.candidate.totalRate.toString()),
+                              new Text(
+                                widget.candidate.totalRate.toString(),
+                                style: new TextStyle(fontWeight: FontWeight.bold),
+                              ),
                               new Padding(padding: const EdgeInsets.only(right: 20.0))
                             ],
                           ),

@@ -46,6 +46,11 @@ class CandidatesList extends StatelessWidget {
             itemCount: _candidates.length
           ),
         ),
+        floatingActionButton: new FloatingActionButton(
+          onPressed: () => print('add candidate pressed'),
+          child: new Icon(Icons.person_add),
+          backgroundColor: Colors.greenAccent,
+        ),
       )
     );
   }
