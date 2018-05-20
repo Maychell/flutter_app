@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import './candidates_list.dart';
+import './login_page.dart';
 
 class LandingPage extends StatelessWidget {
   @override
@@ -8,7 +8,7 @@ class LandingPage extends StatelessWidget {
     return new Material(
       color: Colors.greenAccent,
       child: new InkWell(
-        onTap: () => Navigator.of(context).pushAndRemoveUntil(new MaterialPageRoute(builder: (BuildContext context) => new CandidatesList()), (Route route) => route == null),
+        onTap: () => Navigator.of(context).pushAndRemoveUntil(new MaterialPageRoute(builder: (BuildContext context) => new LoginPage()), (Route route) => route == null),
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[

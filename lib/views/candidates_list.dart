@@ -9,8 +9,14 @@ import '../model/reviewer.dart';
 import '../model/task.dart';
 import '../model/rate.dart';
 import './create_candidate.dart';
+import '../ui_components/drawer_component.dart';
 
 class CandidatesList extends StatefulWidget {
+
+  User _user;
+
+  CandidatesList(this._user);
+
   @override
   State<StatefulWidget> createState() => new CandidatesListState();
 }
@@ -58,6 +64,7 @@ class CandidatesListState extends State<CandidatesList> {
         appBar: new AppBar(
           title: const Text('RecruitX')
         ),
+        drawer: new DrawerComponent(widget._user),
         body: new Padding(
           padding: const EdgeInsets.all(4.0),
           child: new ListView.builder(
