@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 
 import '../ui_components/comment_card.dart';
 import '../ui_components/task_card.dart';
+import './add_comment_page.dart';
 import '../model/candidate.dart';
 import '../model/comment.dart';
 import '../model/task.dart';
+import '../model/user.dart';
 
 class CandidateDetails2 extends StatefulWidget {
 
+  final User _currentUser;
   Candidate candidate;
   String gravatarUrl;
   final String _baseGravatarUrl = 'https://www.gravatar.com/avatar/';
 
-  CandidateDetails2(this.candidate) {
+  CandidateDetails2(this.candidate, this._currentUser) {
     gravatarUrl = _baseGravatarUrl + candidate.emailMd5;
   }
 
@@ -52,8 +55,23 @@ class CandidateDetails2State extends State<CandidateDetails2> {
     return new FloatingActionButton(
       backgroundColor: Colors.greenAccent,
       child: new Icon(Icons.add_comment, color: Colors.white),
-      onPressed: () => print('floating button pressed'),
+      onPressed: () => _addComment(),
     );
+  }
+
+  void _addComment() async {
+    final Comment comment = await Navigator.push(
+      context,
+      new MaterialPageRoute(builder: (context) => new AddCommentPage(widget._currentUser)),
+    );
+
+    if (comment != null) {
+      widget.candidate.comments.add(comment);
+
+      setState(() {
+        this.commentCardsSection = buildCommentCards();
+      });
+    }
   }
 
   @override

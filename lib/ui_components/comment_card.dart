@@ -36,10 +36,10 @@ class CommentCard extends StatelessWidget {
                   children: <Widget>[
                     new Text(_comment.user.name, style: new TextStyle(fontWeight: FontWeight.bold)),
                     new Padding(padding: const EdgeInsets.only(left: 3.0)),
-                    new Text(' - 10/11/2018'),
+                    new Text(_comment.date),
                   ],
                 ),
-                new Text(_comment.message+_comment.message+_comment.message+_comment.message+_comment.message, softWrap: true,)
+                new Text(_comment.message, softWrap: true,)
               ],
             ),
           ),

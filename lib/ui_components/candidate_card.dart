@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 
 import '../model/candidate.dart';
+import '../model/user.dart';
 import '../views/candidate_details_2.dart';
 import '../ui_components/star_rating.dart';
 
 class CandidateCard extends StatelessWidget {
 
+  final User _currentUser;
   Candidate _candidate;
   String _gravatarUrl;
   String _baseGravatarUrl = 'https://www.gravatar.com/avatar/';
 
-  CandidateCard(this._candidate) {
+  CandidateCard(this._candidate, this._currentUser) {
     _gravatarUrl = _baseGravatarUrl + _candidate.emailMd5;
   }
 
@@ -20,7 +22,7 @@ class CandidateCard extends StatelessWidget {
       color: Colors.white70,
       child: new Card(
         child: new InkWell(
-          onTap: () => Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new CandidateDetails2(_candidate))),
+          onTap: () => Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new CandidateDetails2(_candidate, _currentUser))),
           child: new Row(
             children: <Widget>[
               new Padding(padding: const EdgeInsets.all(3.0)),

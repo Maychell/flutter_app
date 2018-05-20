@@ -28,7 +28,7 @@ class CandidatesListState extends State<CandidatesList> {
   void initState() {
     City city = new City(1, 'Natal', 'RN');
     User user = new User(10, 'Fulano', 'beau@dentedreality.com.au');
-    List<Comment> comments = <Comment> [ new Comment(user, 'Muito ruim, gostei não'), new Comment(user, 'Muito ruim, gostei não'), new Comment(user, 'Muito ruim, gostei não'), new Comment(user, 'Muito ruim, gostei não'), new Comment(user, 'Muito ruim, gostei não'), new Comment(user, 'Muito ruim, gostei não'), new Comment(user, 'Muito ruim, gostei não') ];
+    List<Comment> comments = <Comment> [ new Comment(user, 'Muito ruim, gostei não', '10/12/2017'), new Comment(user, 'Muito ruim, gostei não', '11/01/2018'), new Comment(user, 'Muito ruim, gostei não', '10/12/2017'), new Comment(user, 'Muito ruim, gostei não', '10/12/2017'), new Comment(user, 'Muito ruim, gostei não', '10/12/2017'), new Comment(user, 'Muito ruim, gostei não', '11/11/2011'), new Comment(user, 'Hoje pinga', '25/03/2018') ];
     List<Reviewer> reviewers = <Reviewer> [ new Reviewer(11, '', '') ];
     List<Reviewer> reviewersList = <Reviewer> [ new Reviewer(11, '', ''), new Reviewer(11, '', ''), new Reviewer(11, '', '') ];
     List<Rate> rates = <Rate> [ new Rate(11, 5.0), new Rate(11, 4.0) ];
@@ -69,7 +69,7 @@ class CandidatesListState extends State<CandidatesList> {
           padding: const EdgeInsets.all(4.0),
           child: new ListView.builder(
             itemBuilder: (BuildContext context, int index) =>
-            new CandidateCard(_candidates[index]),
+            new CandidateCard(_candidates[index], widget._user),
             itemCount: _candidates.length
           ),
         ),
