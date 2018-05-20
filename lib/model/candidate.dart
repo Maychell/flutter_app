@@ -16,6 +16,7 @@ class Candidate extends User {
   List<Comment> get comments => _comments;
   List<Reviewer> get reviewers => _reviewers;
   List<Task> get tasks => _tasks;
+  set city(City city) => _city = city;
 
   String get fullCityName {
     return _city.name + ', ' + _city.state;

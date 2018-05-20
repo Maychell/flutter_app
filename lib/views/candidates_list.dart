@@ -8,12 +8,18 @@ import '../model/user.dart';
 import '../model/reviewer.dart';
 import '../model/task.dart';
 import '../model/rate.dart';
+import './create_candidate.dart';
 
-class CandidatesList extends StatelessWidget {
+class CandidatesList extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => new CandidatesListState();
+}
 
+class CandidatesListState extends State<CandidatesList> {
   List<Candidate> _candidates;
 
-  CandidatesList() {
+  @override
+  void initState() {
     City city = new City(1, 'Natal', 'RN');
     User user = new User(10, 'Fulano', 'beau@dentedreality.com.au');
     List<Comment> comments = <Comment> [ new Comment(user, 'Muito ruim, gostei não'), new Comment(user, 'Muito ruim, gostei não'), new Comment(user, 'Muito ruim, gostei não'), new Comment(user, 'Muito ruim, gostei não'), new Comment(user, 'Muito ruim, gostei não'), new Comment(user, 'Muito ruim, gostei não'), new Comment(user, 'Muito ruim, gostei não') ];
@@ -25,10 +31,24 @@ class CandidatesList extends StatelessWidget {
     List<Task> tasks = <Task> [ new Task(11, 'English', true, rates), new Task(11, 'Code Review', true, rates_2), new Task(11, 'Curriculum', true, ratesFalse), new Task(11, 'Interview', true, ratesFalse) ];
     List<Task> tasksList = <Task> [ new Task(11, 'English', false, <Rate> []), new Task(11, 'Code Review', false, <Rate> []) ];
 
-    _candidates = <Candidate> [
+    this._candidates = <Candidate> [
       new Candidate(12, 'Maychell Fernandes de Oliveira', 'maychellfernandes@hotmail.com', city, comments, reviewersList, tasksList),
       new Candidate(11, 'Foo Bar', 'beau@dentedreality.com.au', city, <Comment> [], reviewers, tasks),
     ];
+    super.initState();
+  }
+
+  _navigateAndDisplaySelection(BuildContext context) async {
+    final Candidate candidate = await Navigator.push(
+      context,
+      new MaterialPageRoute(builder: (context) => new CreateCandidate()),
+    );
+
+    if (candidate != null) {
+      setState(() {
+        this._candidates.add(candidate);
+      });
+    }
   }
 
   @override
@@ -47,7 +67,7 @@ class CandidatesList extends StatelessWidget {
           ),
         ),
         floatingActionButton: new FloatingActionButton(
-          onPressed: () => print('add candidate pressed'),
+          onPressed: () => _navigateAndDisplaySelection(context),
           child: new Icon(Icons.person_add),
           backgroundColor: Colors.greenAccent,
         ),

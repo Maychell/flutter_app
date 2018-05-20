@@ -12,6 +12,8 @@ class User {
   int get id => _id;
   String get name => _name;
   String get email => _email;
+  set name(String name) => _name = name;
+  set email(String email) => _email = email;
 
   String get emailMd5 {
     var content = new Utf8Encoder().convert(email);
