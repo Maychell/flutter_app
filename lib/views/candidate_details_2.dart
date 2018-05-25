@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../ui_components/comment_card.dart';
-import '../ui_components/task_card.dart';
+import '../ui_components/section_card.dart';
 import './add_comment_page.dart';
 import '../model/candidate.dart';
 import '../model/comment.dart';
-import '../model/task.dart';
+import '../model/section.dart';
 import '../model/user.dart';
 
 class CandidateDetails2 extends StatefulWidget {
@@ -26,17 +26,17 @@ class CandidateDetails2 extends StatefulWidget {
 class CandidateDetails2State extends State<CandidateDetails2> {
 
   List<CommentCard> commentCardsSection;
-  List<TaskCard> taskCardsSection;
+  List<SectionCard> sectionCardsSection;
 
   @override
   void initState() {
     this.commentCardsSection = buildCommentCards();
-    this.taskCardsSection = buildTaskCards();
+    this.sectionCardsSection = buildSectionCards();
     super.initState();
   }
 
-  List<TaskCard> buildTaskCards() {
-    return widget.candidate.tasks.map((Task t) => new TaskCard(t)).toList();
+  List<SectionCard> buildSectionCards() {
+    return widget.candidate.sections.map((Section s) => new SectionCard(s)).toList();
   }
 
   List<CommentCard> buildCommentCards() {
@@ -56,6 +56,42 @@ class CandidateDetails2State extends State<CandidateDetails2> {
       backgroundColor: Colors.greenAccent,
       child: new Icon(Icons.add_comment, color: Colors.white),
       onPressed: () => _addComment(),
+    );
+  }
+
+  Widget buildProfileInfo() {
+    return  new Row(
+      children: <Widget>[
+        candidateAvatar(widget.gravatarUrl),
+        new Padding(padding: const EdgeInsets.only(left: 8.0)),
+        new Expanded(
+          child: new Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              new Text(widget.candidate.name, style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
+              new Padding(padding: const EdgeInsets.only(top: 3.0)),
+              new Text(widget.candidate.fullCityName),
+              new Padding(padding: const EdgeInsets.only(top: 8.0)),
+              new Row(
+                children: <Widget>[
+                  new Text('TOTAL RATING', style: new TextStyle(fontWeight: FontWeight.bold)),
+                  new Padding(padding: const EdgeInsets.all(3.0)),
+                  new Text(widget.candidate.totalRate.toString(), style: new TextStyle(fontWeight: FontWeight.bold)),
+                  new Padding(padding: const EdgeInsets.only(right: 20.0))
+                ],
+              )
+            ],
+          )
+        )
+      ],
+    );
+  }
+
+  Widget buildLineDivider() {
+    return new Container(
+      margin: new EdgeInsets.only(top: 5.0, bottom: 5.0, left: 8.0, right: 8.0),
+      height: 1.5,
+      color: const Color(0xFF00CCFF)
     );
   }
 
@@ -87,58 +123,33 @@ class CandidateDetails2State extends State<CandidateDetails2> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               new Container(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                decoration: new BoxDecoration(
-                  border: new Border(bottom: new BorderSide(color: Colors.grey[500]))
-                ),
-                child: new Row(
+                child: new Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    candidateAvatar(widget.gravatarUrl),
-                    new Padding(padding: const EdgeInsets.only(left: 8.0)),
-                    new Expanded(
-                      child: new Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          new Text(widget.candidate.name, style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
-                          new Column(children: taskCardsSection),
-                          new Padding(padding: const EdgeInsets.only(top: 8.0)),
-                          new Row(
-                            children: <Widget>[
-                              new Expanded(
-                                child: new Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: <Widget>[
-                                    new Text(
-                                      'TOTAL RATING',
-                                      style: new TextStyle(fontWeight: FontWeight.bold),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              new Padding(padding: const EdgeInsets.all(3.0)),
-                              new Text(
-                                widget.candidate.totalRate.toString(),
-                                style: new TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              new Padding(padding: const EdgeInsets.only(right: 20.0))
-                            ],
-                          ),
-                          new RaisedButton(
-                            color: Colors.greenAccent,
-                            child: new Text(
-                              'Add Review',
-                              style: new TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                            ),
-                            onPressed: () => print('add review pressed'),
-                          )
-                        ],
-                      )
+                    buildProfileInfo(),
+                    new Padding(padding: const EdgeInsets.only(top: 15.0)),
+                    new Text('Rating'),
+                    new Container(
+                      margin: new EdgeInsets.only(top: 7.0, left: 8.0, right: 8.0),
+                      padding: const EdgeInsets.only(top: 10.0, bottom: 5.0, left: 8.0, right: 8.0),
+                      decoration: new BoxDecoration(
+                        border: new Border(top: new BorderSide(color: Colors.grey[500]))
+                      ),
+                      child: new Column(children: sectionCardsSection),
                     )
                   ],
-                )
+                ),
               ),
               new Padding(padding: const EdgeInsets.only(top: 15.0)),
-              new Column(children: commentCardsSection)
+              new Text('Comments'),
+              new Container(
+                margin: new EdgeInsets.only(top: 7.0, left: 8.0, right: 8.0),
+                padding: const EdgeInsets.only(top: 10.0, bottom: 5.0, left: 8.0, right: 8.0),
+                decoration: new BoxDecoration(
+                    border: new Border(top: new BorderSide(color: Colors.grey[500]))
+                ),
+                child: new Column(children: commentCardsSection)
+              )
             ],
           )
         ],

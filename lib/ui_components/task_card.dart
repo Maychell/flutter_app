@@ -11,23 +11,34 @@ class TaskCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Container(
-      child: new Row(
-        children: <Widget>[
-          new Expanded(
-            child: new Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                new Text(_task.name),
-              ],
+    return new InkWell(
+      child: new Container(
+        padding: const EdgeInsets.all(8.0),
+        decoration: new BoxDecoration(
+          border: new Border(top: new BorderSide(color: Colors.grey[300]))
+        ),
+        child: new Row(
+          children: <Widget>[
+            new Expanded(
+              child: new Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  new Text(_task.name),
+                ],
+              ),
             ),
-          ),
-          new Padding(padding: const EdgeInsets.all(3.0)),
-          new Text(_task.taskRate.toString()),
-          new StarRating(_task.taskRate),
-          new Padding(padding: const EdgeInsets.only(right: 20.0))
-        ],
-      )
+            new Padding(padding: const EdgeInsets.all(4.0)),
+            new Text(_task.taskRate.toString()),
+            new StarRating(_task.taskRate),
+            new Padding(padding: const EdgeInsets.only(right: 20.0)),
+            new Icon(
+              Icons.chevron_right,
+              color: Colors.grey[700],
+            )
+          ],
+        ),
+      ),
+      onTap: () => print('HSAUHSAUHS'),
     );
   }
 }

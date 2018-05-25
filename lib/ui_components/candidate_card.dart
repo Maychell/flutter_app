@@ -106,7 +106,8 @@ class CandidateCard extends StatelessWidget {
                                     ),
                                     new Padding(padding: const EdgeInsets.only(left: 5.0)),
                                     new Text(
-                                      _candidate.completedTask.length.toString() + '/' + _candidate.tasks.length.toString() + ' completed',
+                                      '',
+//                                      _candidate.completedTask.length.toString() + '/' + _candidate.tasks.length.toString() + ' completed',
                                       style: new TextStyle(
                                           color: Colors.grey[500],
                                           fontSize: 12.0

@@ -8,6 +8,7 @@ import '../model/user.dart';
 import '../model/reviewer.dart';
 import '../model/task.dart';
 import '../model/rate.dart';
+import '../model/section.dart';
 import './create_candidate.dart';
 import '../ui_components/drawer_component.dart';
 
@@ -34,12 +35,16 @@ class CandidatesListState extends State<CandidatesList> {
     List<Rate> rates = <Rate> [ new Rate(11, 5.0), new Rate(11, 4.0) ];
     List<Rate> ratesFalse = <Rate> [ new Rate(11, 5.0), new Rate(11, 5.0), new Rate(11, 5.0) ];
     List<Rate> rates_2 = <Rate> [ new Rate(11, 3.0), new Rate(11, 2.0) ];
-    List<Task> tasks = <Task> [ new Task(11, 'English', true, rates), new Task(11, 'Code Review', true, rates_2), new Task(11, 'Curriculum', true, ratesFalse), new Task(11, 'Interview', true, ratesFalse) ];
+    List<Task> tasks = <Task> [ new Task(11, 'English', true, rates), new Task(11, 'Code Review', true, rates_2) ];
+    List<Task> tasks_2 = <Task> [ new Task(11, 'Curriculum', true, ratesFalse), new Task(11, 'Interview', true, ratesFalse) ];
     List<Task> tasksList = <Task> [ new Task(11, 'English', false, <Rate> []), new Task(11, 'Code Review', false, <Rate> []) ];
 
+    List<Section> sections = <Section> [ new Section('Section 1', tasks), new Section('Section 2', tasks_2) ];
+    List<Section> sectionsList = <Section> [ new Section('Section 1', tasksList) ];
+
     this._candidates = <Candidate> [
-      new Candidate(12, 'Maychell Fernandes de Oliveira', 'maychellfernandes@hotmail.com', city, comments, reviewersList, tasksList),
-      new Candidate(11, 'Foo Bar', 'beau@dentedreality.com.au', city, <Comment> [], reviewers, tasks),
+      new Candidate(12, 'Maychell Fernandes de Oliveira', 'maychellfernandes@hotmail.com', city, comments, reviewersList, sections),
+      new Candidate(11, 'Foo Bar', 'beau@dentedreality.com.au', city, <Comment> [], reviewers, sectionsList),
     ];
     super.initState();
   }
