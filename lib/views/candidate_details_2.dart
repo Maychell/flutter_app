@@ -44,57 +44,6 @@ class CandidateDetails2State extends State<CandidateDetails2> {
   }
   
   
-  Widget candidateAvatar(url) => new Image.network(
-    url,
-    width: 90.0,
-    height: 90.0,
-    fit: BoxFit.cover,
-  );
-  
-  Widget buildActionButton() {
-    return new FloatingActionButton(
-      backgroundColor: Colors.greenAccent,
-      child: new Icon(Icons.add_comment, color: Colors.white),
-      onPressed: () => _addComment(),
-    );
-  }
-
-  Widget buildProfileInfo() {
-    return  new Row(
-      children: <Widget>[
-        candidateAvatar(widget.gravatarUrl),
-        new Padding(padding: const EdgeInsets.only(left: 8.0)),
-        new Expanded(
-          child: new Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              new Text(widget.candidate.name, style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
-              new Padding(padding: const EdgeInsets.only(top: 3.0)),
-              new Text(widget.candidate.fullCityName),
-              new Padding(padding: const EdgeInsets.only(top: 8.0)),
-              new Row(
-                children: <Widget>[
-                  new Text('TOTAL RATING', style: new TextStyle(fontWeight: FontWeight.bold)),
-                  new Padding(padding: const EdgeInsets.all(3.0)),
-                  new Text(widget.candidate.totalRate.toString(), style: new TextStyle(fontWeight: FontWeight.bold)),
-                  new Padding(padding: const EdgeInsets.only(right: 20.0))
-                ],
-              )
-            ],
-          )
-        )
-      ],
-    );
-  }
-
-  Widget buildLineDivider() {
-    return new Container(
-      margin: new EdgeInsets.only(top: 5.0, bottom: 5.0, left: 8.0, right: 8.0),
-      height: 1.5,
-      color: const Color(0xFF00CCFF)
-    );
-  }
-
   void _addComment() async {
     final Comment comment = await Navigator.push(
       context,
@@ -112,49 +61,96 @@ class CandidateDetails2State extends State<CandidateDetails2> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text('Candidate Details'),
-      ),
-      body: new ListView(
-        padding: new EdgeInsets.only(top: 8.0),
-        children: <Widget>[
-          new Column(
+    final candidateAvatar = new Image.network(
+      widget.gravatarUrl,
+      width: 90.0,
+      height: 90.0,
+      fit: BoxFit.cover,
+    );
+
+    final profileInfo = new Row(
+      children: <Widget>[
+        candidateAvatar,
+        new Padding(padding: const EdgeInsets.only(left: 8.0)),
+        new Expanded(
+          child: new Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              new Container(
-                child: new Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    buildProfileInfo(),
-                    new Padding(padding: const EdgeInsets.only(top: 15.0)),
-                    new Text('Rating'),
-                    new Container(
-                      margin: new EdgeInsets.only(top: 7.0, left: 8.0, right: 8.0),
-                      padding: const EdgeInsets.only(top: 10.0, bottom: 5.0, left: 8.0, right: 8.0),
-                      decoration: new BoxDecoration(
-                        border: new Border(top: new BorderSide(color: Colors.grey[500]))
-                      ),
-                      child: new Column(children: sectionCardsSection),
-                    )
-                  ],
-                ),
-              ),
-              new Padding(padding: const EdgeInsets.only(top: 15.0)),
-              new Text('Comments'),
-              new Container(
-                margin: new EdgeInsets.only(top: 7.0, left: 8.0, right: 8.0),
-                padding: const EdgeInsets.only(top: 10.0, bottom: 5.0, left: 8.0, right: 8.0),
-                decoration: new BoxDecoration(
-                    border: new Border(top: new BorderSide(color: Colors.grey[500]))
-                ),
-                child: new Column(children: commentCardsSection)
+              new Text(widget.candidate.name, style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
+              new Padding(padding: const EdgeInsets.only(top: 3.0)),
+              new Text(widget.candidate.fullCityName, style: new TextStyle(color: Colors.grey[500])),
+              new Padding(padding: const EdgeInsets.only(top: 3.0)),
+              new Text(widget.candidate.email),
+              new Padding(padding: const EdgeInsets.only(top: 8.0)),
+              new Row(
+                children: <Widget>[
+                  new Text('Score:', style: new TextStyle(fontWeight: FontWeight.bold)),
+                  new Padding(padding: const EdgeInsets.all(3.0)),
+                  new Text(widget.candidate.totalRate.toString(), style: new TextStyle(fontWeight: FontWeight.bold)),
+                  new Padding(padding: const EdgeInsets.only(right: 20.0))
+                ],
               )
             ],
           )
-        ],
-      ),
-      floatingActionButton: buildActionButton(),
+        )
+      ],
+    );
+
+    final actionButton = new FloatingActionButton(
+      backgroundColor: Colors.greenAccent,
+      child: new Icon(Icons.add_comment, color: Colors.white),
+      onPressed: () => _addComment(),
+    );
+
+    final deviderLine = new BoxDecoration(border: new Border(top: new BorderSide(color: Colors.grey[500])));
+    final contentMargin = const EdgeInsets.only(top: 7.0, left: 8.0, right: 8.0);
+    final contentPadding = const EdgeInsets.only(top: 10.0, bottom: 5.0, left: 8.0, right: 8.0);
+
+    final ratingSection = new Container(
+      margin: contentMargin,
+      padding: contentPadding,
+      decoration: deviderLine,
+      child: new Column(children: sectionCardsSection),
+    );
+
+    final commentsSection = new Container(
+      margin: contentMargin,
+      padding: contentPadding,
+      decoration: deviderLine,
+      child: new Column(children: commentCardsSection)
+    );
+
+    final headerStyle = new TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 16.0,
+      color: Colors.lightBlue
+    );
+
+    final ratingText = new Text('Rating', style: headerStyle);
+    final commentText = new Text('Comments', style: headerStyle);
+
+    final body = new ListView(
+      padding: new EdgeInsets.only(top: 8.0),
+      children: <Widget>[
+        new Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            profileInfo,
+            new Padding(padding: const EdgeInsets.only(top: 15.0)),
+            new Container(padding: contentMargin, child: ratingText),
+            ratingSection,
+            new Padding(padding: const EdgeInsets.only(top: 15.0)),
+            new Container(padding: contentMargin, child: commentText),
+            commentsSection
+          ],
+        )
+      ],
+    );
+
+    return new Scaffold(
+      appBar: new AppBar(title: new Text('Candidate Details')),
+      body: body,
+      floatingActionButton: actionButton,
     );
   }
 }

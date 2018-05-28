@@ -34,35 +34,85 @@ class LoginPageState extends State<LoginPage> {
 
   @override
     Widget build(BuildContext context) {
-      return new Material(
-        child: new Container(
+      final logo = new Hero(
+        tag: 'logo',
+        child: new CircleAvatar(
+          backgroundColor: Colors.transparent,
+          radius: 48.0,
+          child: new Image.asset('images/codeminer-logo.png'),
+        )
+      );
+
+      final email = new Padding(
+        padding: new EdgeInsets.only(top: 15.0),
+        child: new TextFormField(
+          keyboardType: TextInputType.emailAddress,
+          autofocus: false,
+          validator: (val) => val.isEmpty? 'Email can\'t be empty.' : null,
+          onSaved: (value) => this._email = value,
+          decoration: new InputDecoration(
+            hintText: 'Email',
+            contentPadding: new EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+            border: new OutlineInputBorder(
+              borderRadius: new BorderRadius.circular(32.0)
+            )
+          ),
+        )
+      );
+
+      final password = new Padding(
+        padding: new EdgeInsets.only(top: 15.0),
+        child: new TextFormField(
+          autofocus: false,
+          obscureText: true,
+          validator: (val) => val.isEmpty? 'Password can\'t be empty.' : null,
+          onSaved: (value) => this._password = value,
+          decoration: new InputDecoration(
+            hintText: 'Password',
+            contentPadding: new EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+            border: new OutlineInputBorder(
+              borderRadius: new BorderRadius.circular(32.0)
+            )
+          ),
+        )
+      );
+
+      final loginButton = new Padding(
+        padding: new EdgeInsets.symmetric(vertical: 16.0),
+        child: new Material(
+          borderRadius: new BorderRadius.circular(30.0),
+          shadowColor: Colors.yellow,
+          elevation: 5.0,
+          child: new MaterialButton(
+            minWidth: 200.0,
+            height: 42.0,
+            color: Colors.greenAccent,
+            child: new Text('Login', style: new TextStyle(color: Colors.white)),
+            onPressed: () => _submit(),
+          ),
+        ),
+      );
+
+      final forgotPassword = new FlatButton(
+        child: new Text('Forgot Password?', style: new TextStyle(color: Colors.white)),
+        onPressed: () {}
+      );
+
+      return new Scaffold(
+        backgroundColor: Colors.lightBlue[200],
+        body: new Center(
           child: new Form(
             key: this._formKey,
-            child: new ListView(
+            child: new Column(
               children: <Widget>[
-                new TextFormField(
-                  decoration: new InputDecoration(
-                    hintText: 'email@example.com',
-                    labelText: 'Email'
-                  ),
-                  validator: (val) => val.isEmpty? 'Email can\'t be empty.' : null,
-                  onSaved: (value) => this._email = value,
-                ),
-                new TextFormField(
-                  decoration: new InputDecoration(
-                    hintText: 'Password',
-                    labelText: '****'
-                  ),
-                  validator: (val) => val.isEmpty? 'Password can\'t be empty.' : null,
-                  onSaved: (value) => this._password = value,
-                ),
-                new RaisedButton(
-                  onPressed: () => _submit(),
-                  child: new Text('Login'),
-                )
+                logo,
+                email,
+                password,
+                loginButton,
+                forgotPassword
               ],
-            ),
-          ),
+            )
+          )
         )
       );
     }

@@ -64,25 +64,28 @@ class CandidatesListState extends State<CandidatesList> {
 
   @override
   Widget build(BuildContext context) {
+    final actionButton = new FloatingActionButton(
+      onPressed: () => _navigateAndDisplaySelection(context),
+      child: new Icon(Icons.person_add),
+      backgroundColor: Colors.greenAccent,
+    );
+
+    final body = new Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: new ListView.builder(
+        itemBuilder: (BuildContext context, int i) => new CandidateCard(_candidates[i], widget._user),
+        itemCount: _candidates.length
+      ),
+    );
+
     return new MaterialApp(
       home: new Scaffold(
         appBar: new AppBar(
           title: const Text('RecruitX')
         ),
         drawer: new DrawerComponent(widget._user),
-        body: new Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: new ListView.builder(
-            itemBuilder: (BuildContext context, int index) =>
-            new CandidateCard(_candidates[index], widget._user),
-            itemCount: _candidates.length
-          ),
-        ),
-        floatingActionButton: new FloatingActionButton(
-          onPressed: () => _navigateAndDisplaySelection(context),
-          child: new Icon(Icons.person_add),
-          backgroundColor: Colors.greenAccent,
-        ),
+        body: body,
+        floatingActionButton: actionButton
       )
     );
   }
