@@ -23,18 +23,15 @@ class Candidate extends User {
   }
 
   double get totalRate {
-//    if (completedTask.isEmpty) {
-//      return 0.0;
-//    }
-//
-//    double rateSum = completedTask.map((Task t) => t.taskRate)
-//                                  .reduce((v1, v2) => v1 + v2);
-//
-//    return rateSum / completedTask.length;
-    return 0.0;
+    if (completedSectionTask.isEmpty) return 0.0;
+
+    double rateSum = completedSectionTask.map((Section s) => s.totalSectionRate)
+                                  .reduce((v1, v2) => v1 + v2);
+
+    return rateSum / completedSectionTask.length;
   }
 
-//  List<Task> get completedTask {
-//    return _tasks.where((Task t) => t.isCompleted).toList();
-//  }
+  List<Section> get completedSectionTask {
+    return _sections.where((Section s) => s.completedTask.isNotEmpty ).toList();
+  }
 }

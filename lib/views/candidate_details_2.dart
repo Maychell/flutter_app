@@ -86,7 +86,7 @@ class CandidateDetails2State extends State<CandidateDetails2> {
                 children: <Widget>[
                   new Text('Score:', style: new TextStyle(fontWeight: FontWeight.bold)),
                   new Padding(padding: const EdgeInsets.all(3.0)),
-                  new Text(widget.candidate.totalRate.toString(), style: new TextStyle(fontWeight: FontWeight.bold)),
+                  new Text(widget.candidate.totalRate.toStringAsFixed(2), style: new TextStyle(fontWeight: FontWeight.bold)),
                   new Padding(padding: const EdgeInsets.only(right: 20.0))
                 ],
               )
