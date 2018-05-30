@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import './candidates_list.dart';
 
@@ -12,28 +15,46 @@ class LoginPage extends StatefulWidget {
 class LoginPageState extends State<LoginPage> {
 
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   String _email;
   String _password;
+
+  Future<User> _loginUser() async {
+    final SharedPreferences prefs = await _prefs;
+    final _user = new User(10, 'Teste', _email);
+
+    prefs.setInt("id", _user.id);
+    prefs.setString("email", _user.email);
+    prefs.setString("name", _user.name);
+
+    return _user;
+  }
 
   void _submit() {
     if (this._formKey.currentState.validate()) {
       _formKey.currentState.save();
 
-      final user = new User(10, 'Teste', _email);
-      
-      Navigator.of(context)
-               .pushAndRemoveUntil(
-                  new MaterialPageRoute(
-                    builder: (BuildContext context) => new CandidatesList(user)
-                  ),
-                  (Route route) => route == null
-                );
+      _loginUser().then((user) {
+        Navigator.of(context)
+            .pushAndRemoveUntil(
+            new MaterialPageRoute(
+                builder: (BuildContext context) => new CandidatesList(user)
+            ),
+                (Route route) => route == null
+        );
+      });
     }
   }
 
   @override
     Widget build(BuildContext context) {
+      final textPadding = new EdgeInsets.only(top: 15.0, left: 20.0, right: 20.0);
+      final contentPadding = new EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0);
+      final outlineCircularBorder = new OutlineInputBorder(
+        borderRadius: new BorderRadius.circular(32.0)
+      );
+
       final logo = new Hero(
         tag: 'logo',
         child: new CircleAvatar(
@@ -44,7 +65,7 @@ class LoginPageState extends State<LoginPage> {
       );
 
       final email = new Padding(
-        padding: new EdgeInsets.only(top: 15.0),
+        padding: textPadding,
         child: new TextFormField(
           keyboardType: TextInputType.emailAddress,
           autofocus: false,
@@ -52,16 +73,14 @@ class LoginPageState extends State<LoginPage> {
           onSaved: (value) => this._email = value,
           decoration: new InputDecoration(
             hintText: 'Email',
-            contentPadding: new EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-            border: new OutlineInputBorder(
-              borderRadius: new BorderRadius.circular(32.0)
-            )
+            contentPadding: contentPadding,
+            border: outlineCircularBorder
           ),
         )
       );
 
       final password = new Padding(
-        padding: new EdgeInsets.only(top: 15.0),
+        padding: textPadding,
         child: new TextFormField(
           autofocus: false,
           obscureText: true,
@@ -69,10 +88,8 @@ class LoginPageState extends State<LoginPage> {
           onSaved: (value) => this._password = value,
           decoration: new InputDecoration(
             hintText: 'Password',
-            contentPadding: new EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-            border: new OutlineInputBorder(
-              borderRadius: new BorderRadius.circular(32.0)
-            )
+            contentPadding: contentPadding,
+            border: outlineCircularBorder
           ),
         )
       );
@@ -86,7 +103,7 @@ class LoginPageState extends State<LoginPage> {
           child: new MaterialButton(
             minWidth: 200.0,
             height: 42.0,
-            color: Colors.greenAccent,
+            color: Colors.green,
             child: new Text('Login', style: new TextStyle(color: Colors.white)),
             onPressed: () => _submit(),
           ),
@@ -98,21 +115,30 @@ class LoginPageState extends State<LoginPage> {
         onPressed: () {}
       );
 
+      final body = new Form(
+        key: this._formKey,
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            logo,
+            email,
+            password,
+            loginButton,
+            forgotPassword
+          ],
+        )
+      );
+
       return new Scaffold(
         backgroundColor: Colors.lightBlue[200],
-        body: new Center(
-          child: new Form(
-            key: this._formKey,
-            child: new Column(
-              children: <Widget>[
-                logo,
-                email,
-                password,
-                loginButton,
-                forgotPassword
-              ],
-            )
-          )
+        body: new Container(
+          decoration: new BoxDecoration(
+            image: new DecorationImage(
+              image: new AssetImage("images/background.png"),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: body
         )
       );
     }
